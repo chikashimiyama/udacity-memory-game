@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 /*
  * Create a list that holds all of your cards
  */
@@ -36,3 +37,36 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+// close all cards
+
+const deck = document.querySelector(".deck");
+deck.addEventListener("click", function(event){
+	const target = event.target;
+	let currentClass = target.getAttribute("class");
+	if(currentClass === "card"){
+		target.setAttribute("class", "card open show");
+	}else{
+		target.setAttribute("class", "card");
+	}
+
+	const index = parseInt(target.dataset.index);
+	console.log(typeof currentClass);
+
+});
+
+function respondToClick(event){
+
+}
+
+function closeAllCards(){
+
+}
+
+function openCard(index){
+
+}
+
+function checkMatching(){
+
+}
