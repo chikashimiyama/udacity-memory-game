@@ -11,11 +11,18 @@ class Dealer{
 
 		this.deckFrame.addEventListener("click", (event) => {
 			let target = event.target;
+			
 			// in case the icon in the card is clicked, change the target to its parent, the card itself.
 			if(target.tagName === "I"){
 				target = target.parentNode;
 			}
+
 			const index = Array.prototype.indexOf.call(this.deckFrame.children, target);
+			
+			// in case the user clicks the deck not the card
+			if(index < 0){
+				return;
+			}
 			this.respondToClick(index);
 		});
 
@@ -48,32 +55,31 @@ class Dealer{
 	}
 
 	respondToClick(index){
-		if(this.cards[index].open()){
+		this.cards[index].flip(() => {
 			this.openedCards.push(this.cards[index]);
-		}
 
-		if(this.openedCards.length === 2){
-			if(this.checkMatch()){
-				for(const openCard of this.openedCards){
-					openCard.match();
+			if(this.openedCards.length === 2){
+				if(this.checkMatch()){
+					for(const openCard of this.openedCards){
+						openCard.match();
+					}
+					this.matchedPairs++;
+					if(this.checkFinished()){
+						this.showResult();
+					}
+				}else{
+					for(const openCard of this.openedCards){
+						openCard.unmatch();
+					}
 				}
-				this.matchedPairs++;
-				if(this.checkFinished()){
-					this.restart();
-				}
-			}else{
-				for(const openCard of this.openedCards){
-					openCard.close();
-				}
+				this.openedCards = []; // clear array
 			}
-			this.openedCards = []; // clear array
-		}
-
+		});
 	}
 
 	checkFinished(){
-		if(matchedPairs === 8){
-			matchedPairs = 0;
+		if(this.matchedPairs === 8){
+			this.matchedPairs = 0;
 			return true;
 		}
 		return false;
