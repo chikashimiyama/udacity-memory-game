@@ -9,6 +9,10 @@ class Card{
 		this.open = false; // the face of the card is down by default;
 	}
 
+	isMatched(type){
+		return this.type === type;
+	}
+
 	show(){
 		const listElement = document.createElement("li");
 		listElement.classList.add("card");

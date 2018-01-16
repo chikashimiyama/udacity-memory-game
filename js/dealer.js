@@ -8,7 +8,6 @@ class Dealer{
 		this.deckFrame = document.querySelector(".deck");
 		this.restartButton = document.querySelector(".restart");
 		this.init();
-
 		this.deckFrame.addEventListener("click", (event) => {
 			let target = event.target;
 			
@@ -32,9 +31,9 @@ class Dealer{
 	init(){
 		this.openedCards = [];
 		this.elapsedTime = 0.0;
-		this.rating = 3;
-		this.matchedPairs = 0;
-		this.moves = 0;
+		this.matchedPairCounter = new Counter();
+		this.moveCounter = new MoveCounter();
+		this.evaluator = new Evaluator();
 		this.clickAcception = true;
 	}
 
@@ -64,12 +63,15 @@ class Dealer{
 			this.openedCards.push(this.cards[index]);
 
 			if(this.openedCards.length === 2){
-				this.moves++;
+				
+				this.moveCounter.increment();
+				this.evaluator.evaluate(this.moveCounter.value);
+
 				if(this.checkMatch()){
 					for(const openCard of this.openedCards){
 						openCard.match(becomeClickable);
 					}
-					this.matchedPairs++;
+					this.matchedPairCounter.increment();
 					if(this.checkFinished()){
 						this.showResult();
 					}
@@ -79,23 +81,23 @@ class Dealer{
 					}
 				}
 				this.openedCards = []; // clear array
+
 			}else{
 				becomeClickable();
 			}
 		});
 	}
 
-
 	checkFinished(){
-		if(this.matchedPairs === 8){
-			this.matchedPairs = 0;
+		if(this.matchedPairCounter.value === 8){
+			this.matchedPairCounter.reset();
 			return true;
 		}
 		return false;
 	}
 
 	checkMatch(){
-		return this.openedCards[0].type === this.openedCards[1].type;
+		return this.openedCards[0].isMatched(this.openedCards[1].type);
 	}
 
 	shuffle() {
@@ -110,15 +112,8 @@ class Dealer{
 	    }
 	}
 
-	closeAllCards(){
-		for(const card of this.cards){
-			if(card.open) card.flip();
-		}
-	}
-
 	restart(){
-		closeAllCards();
-		shuffle();
-		init();
+		this.shuffle();
+		this.init();
 	}
 }
