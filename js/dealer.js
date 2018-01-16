@@ -19,10 +19,8 @@ class Dealer{
 
 			const index = Array.prototype.indexOf.call(this.deckFrame.children, target);
 			
-			// in case the user clicks the deck not the card
-			if(index < 0){
-				return;
-			}
+			// in case the user clicks the deck not the card or animation is ongoing
+			if(index < 0 || !this.clickAcception) return;
 			this.respondToClick(index);
 		});
 
@@ -36,6 +34,8 @@ class Dealer{
 		this.elapsedTime = 0.0;
 		this.rating = 3;
 		this.matchedPairs = 0;
+		this.moves = 0;
+		this.clickAcception = true;
 	}
 
 	prepare(){
@@ -49,19 +49,24 @@ class Dealer{
 	}
 
 	deal(){
-		for(const card of this.cards){
-			card.show();
-		}
+		for(const card of this.cards) card.show();
 	}
 
 	respondToClick(index){
+
+		// the player clicked the same card twice
+		if(this.cards[index] === this.openedCards[0]) return;
+
+		this.clickAcception = false;
+		const becomeClickable = () =>{ this.clickAcception = true;};
+
 		this.cards[index].flip(() => {
 			this.openedCards.push(this.cards[index]);
 
 			if(this.openedCards.length === 2){
 				if(this.checkMatch()){
 					for(const openCard of this.openedCards){
-						openCard.match();
+						openCard.match(becomeClickable);
 					}
 					this.matchedPairs++;
 					if(this.checkFinished()){
@@ -69,10 +74,12 @@ class Dealer{
 					}
 				}else{
 					for(const openCard of this.openedCards){
-						openCard.unmatch();
+						openCard.unmatch(becomeClickable);
 					}
 				}
 				this.openedCards = []; // clear array
+			}else{
+				becomeClickable();
 			}
 		});
 	}
@@ -103,7 +110,7 @@ class Dealer{
 
 	closeAllCards(){
 		for(const card of this.cards){
-			card.close();
+			if(card.open) card.flip();
 		}
 	}
 

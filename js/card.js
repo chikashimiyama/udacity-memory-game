@@ -38,7 +38,7 @@ class Card{
 		}, 35);
 	}
 
-	match(){
+	match(postProcess){
 		this.view.setAttribute("class", "card match");
 		this.view.style.transform = "scale(1.5)";
 		let scale = 1.4;
@@ -48,11 +48,12 @@ class Card{
 			if(scale <= 1.0){
 				this.view.style.transform = "scale(1.0)";
 				clearInterval(id);
+				postProcess();
 			}
 		}, 35);
 	}
 
-	unmatch(){
+	unmatch(postProcess){
 		let phase = 0.0;
 		const id = setInterval( () =>{
 			const amp = Math.sin(phase) * 20;
@@ -61,7 +62,7 @@ class Card{
 			if(phase >= 12){
 				clearInterval(id);
 				this.view.style.transform = "translateX(0px)";
-				this.flip();
+				this.flip(postProcess);
 			}
 		}, 35);
 	}
