@@ -55,6 +55,7 @@ class Card{
 
 	unmatch(postProcess){
 		let phase = 0.0;
+		this.view.setAttribute("class", "card unmatch");
 		const id = setInterval( () =>{
 			const amp = Math.sin(phase) * 20;
 			this.view.style.transform = "translateX("+amp+"px)";

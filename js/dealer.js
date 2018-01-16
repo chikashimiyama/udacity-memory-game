@@ -64,6 +64,7 @@ class Dealer{
 			this.openedCards.push(this.cards[index]);
 
 			if(this.openedCards.length === 2){
+				this.moves++;
 				if(this.checkMatch()){
 					for(const openCard of this.openedCards){
 						openCard.match(becomeClickable);
@@ -83,6 +84,7 @@ class Dealer{
 			}
 		});
 	}
+
 
 	checkFinished(){
 		if(this.matchedPairs === 8){
