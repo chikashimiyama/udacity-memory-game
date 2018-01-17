@@ -5,9 +5,19 @@ class Dealer{
 	constructor(){
 
 		this.cards = [];
+		this.openedCards = [];
 		this.deckFrame = document.querySelector(".deck");
 		this.restartButton = document.querySelector(".restart");
-		this.init();
+		this.elapsedTime = 0.0;
+		this.matchedPairCounter = new Counter();
+		this.timer = new TimerController(document.querySelector(".elapsedTime"));
+		this.moveCounter = new MoveCounter(document.querySelector(".moves"));
+		this.evaluator = new Evaluator(document.querySelector(".stars"));
+		this.clickAcception = true;
+
+		this.timer.start();
+
+
 		this.deckFrame.addEventListener("click", (event) => {
 			let target = event.target;
 			
@@ -26,15 +36,6 @@ class Dealer{
 		this.restartButton.addEventListener("click", (event) => {
 			this.restart();
 		});
-	}
-
-	init(){
-		this.openedCards = [];
-		this.elapsedTime = 0.0;
-		this.matchedPairCounter = new Counter();
-		this.moveCounter = new MoveCounter();
-		this.evaluator = new Evaluator();
-		this.clickAcception = true;
 	}
 
 	prepare(){
@@ -58,7 +59,6 @@ class Dealer{
 
 		this.clickAcception = false;
 		const becomeClickable = () =>{ this.clickAcception = true;};
-
 		this.cards[index].flip(() => {
 			this.openedCards.push(this.cards[index]);
 
