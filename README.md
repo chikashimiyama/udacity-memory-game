@@ -1,20 +1,24 @@
 # Memory Game Project
 
-## Table of Contents
 
-* [Instructions](#instructions)
-* [Contributing](#contributing)
+## What is this?
 
-## Instructions
+This app is a simple memory game coded with pure javascript, css and HTML. It doesn't rely on any other external libraries such as jQuery or Bootstrap.
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+## Browser Compatibilities
+The application is tested on Safari, Chrome and Firefox on Mac 10.13 (as of January 21. 2018)
 
-To get started, open `js/app.js` and start building out the app's functionality
+I tried to use ES6 syntax and OOP techniques as much as possible in order to improve the reusability of the code and decouple the logic from the interface.
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+## How to play
 
-## Contributing
+Download the repo and open index.html file.
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
+## Class hierarchy
 
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+Here is the UML of the classes used for this application
+
+
+## License 
+
+See License.txt
