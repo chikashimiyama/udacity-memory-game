@@ -151,4 +151,5 @@ h1 {
     background: #02ccba;
     border-radius: 20px;
     text-align: center;
+    cursor: pointer;
 }
