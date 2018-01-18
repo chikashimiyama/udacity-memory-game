@@ -37,6 +37,5 @@ class CounterController extends Counter{
 	update(){
 		this.counterElement.innerHTML = this.value;
 	}
-
 }
 
