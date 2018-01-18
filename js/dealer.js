@@ -4,25 +4,26 @@ class Dealer{
 
 	constructor(){
 
-		this.cards = [];
+		this.deckDiv = document.querySelector(".deck");
+		this.restartButton = document.querySelector(".restart");
+		this.retryButton = document.querySelector(".retry");
+
+		this.cards = new CardArray(this.deckDiv);
 		this.openedCards = [];
 
-		this.deckFrame = document.querySelector(".deck");
-		this.restartButtons = document.querySelectorAll(".restart");
+		this.firstFlip = false;
 
 		this.gate = new Gate();
-		this.matchedPairCounter = new Counter();
 		this.timer = new TimerController(document.querySelector(".elapsed-time"));
 		this.moveCounter = new MoveCounter(document.querySelector(".moves"));
 		this.evaluator = new Evaluator(document.querySelector(".stars"));
 		this.result = new Result(document.querySelector(".result"));
 		this.defineCallbacks();
-		this.init();
 
 	}
 
 	defineCallbacks(){
-		this.deckFrame.addEventListener("click", (event) => {
+		this.deckDiv.addEventListener("click", (event) => {
 			let target = event.target;
 			
 			// in case the icon in the card is clicked, change the target to its parent, the card itself.
@@ -30,33 +31,22 @@ class Dealer{
 				target = target.parentNode;
 			}
 
-			const index = Array.prototype.indexOf.call(this.deckFrame.children, target);
+			const index = Array.prototype.indexOf.call(this.deckDiv.children, target);
 			
 			// in case the user clicks the deck not the card or animation is ongoing
 			if(index < 0 || !this.gate.status) return;
 			this.respondToClick(index);
 		});
 
-		for(const restartButton of this.restartButtons){
-			restartButton.addEventListener("click", (event) => {
-				this.restart();
-			});
-		}
+		this.restartButton.addEventListener("click", (event) => {
+			this.restart();
+		});
 
-	}
+		this.retryButton.addEventListener("click", (event) => {
+			this.result.close();
+			this.restart();
+		});
 
-	init(){
-		const cardTypes = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-leaf", "fa-bicycle", "fa-bomb", "fa-cube", "fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-leaf", "fa-bicycle", "fa-bomb", "fa-cube"];
-		for(const cardType of cardTypes){
-			const newCard = new Card(cardType, this.deckFrame);
-			this.cards.push(newCard);
-		}
-		//this.shuffle();
-		this.deal();
-	}
-
-	deal(){
-		for(const card of this.cards) card.show();
 	}
 
 	respondToClick(index){
@@ -65,18 +55,12 @@ class Dealer{
 		if(this.cards[index] === this.openedCards[0]) return;
 		
 		// if this is the first flip, start the timer
-		if(this.allDown()){
+		if(!this.firstFlip){
+			this.firstFlip = true;
 			this.timer.start();
 		}
 
 		this.executeFlip(index);
-	}
-
-	allDown(){
-		for(const card of this.cards){
-			if(card.open) return false;
-		}
-		return true;
 	}
 
 	executeFlip(index){
@@ -89,12 +73,11 @@ class Dealer{
 				this.moveCounter.increment();
 				this.evaluator.evaluate(this.moveCounter.value);
 
-				if(this.checkMatch()){
+				if(this.openedCards[0].isMatched(this.openedCards[1])){
 					for(const openCard of this.openedCards){
 						openCard.match(this.gate.triggerOpen());
 					}
-					this.matchedPairCounter.increment();
-					if(this.checkFinished()){
+					if(this.cards.allMatched()){
 						this.timer.stop();
 						this.result.show(this.moveCounter.value, this.timer.elapsedTime, this.evaluator.numStars());
 					}
@@ -111,31 +94,13 @@ class Dealer{
 		});
 	}
 
-	checkFinished(){
-		if(this.matchedPairCounter.value === 8){
-			this.matchedPairCounter.reset();
-			return true;
-		}
-		return false;
-	}
-
-	checkMatch(){
-		return this.openedCards[0].isMatched(this.openedCards[1].type);
-	}
-
-	shuffle() {
-    	let currentIndex = this.cards.length;
-    	let temporaryValue, randomIndex;
-	    while (currentIndex !== 0) {
-    	    randomIndex = Math.floor(Math.random() * currentIndex);
-        	currentIndex -= 1;
-	        temporaryValue = this.cards[currentIndex];
-    	    this.cards[currentIndex] = this.cards[randomIndex];
-        	this.cards[randomIndex] = temporaryValue;
-	    }
-	}
-
 	restart(){
-		this.shuffle();
+		this.firstFlip = false;
+		this.timer.reset();
+		this.moveCounter.reset();
+		this.evaluator.reset();
+		this.deckDiv.innerHTML = "";
+		this.cards = new CardArray(this.deckDiv);
 	}
+
 }

@@ -7,10 +7,11 @@ class Card{
 		this.deck = deck;
 		this.view = null;
 		this.open = false; // the face of the card is down by default;
+		this.matched = false;
 	}
 
-	isMatched(type){
-		return this.type === type;
+	isMatched(card){
+		return this.type === card.type;
 	}
 
 	show(){
@@ -43,6 +44,7 @@ class Card{
 	}
 
 	match(postProcess){
+		this.matched = true;
 		this.view.setAttribute("class", "card match");
 		this.view.style.transform = "scale(1.5)";
 		let scale = 1.4;

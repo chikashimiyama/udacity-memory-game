@@ -21,6 +21,7 @@ class Timer{
 	}
 
 	reset(){
+		this.stop();
 		this.elapsedTime = 0;
 	}
 }
@@ -37,6 +38,11 @@ class TimerController extends Timer{
 
 	start(){
 		super.start(() => { this.update();});
+	}
+
+	reset(){
+		super.reset();
+		this.update();
 	}
 
 	update(){

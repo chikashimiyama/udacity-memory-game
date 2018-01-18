@@ -43,7 +43,7 @@ class Evaluator {
 		const starsToBeAdded = 3 - this.numStars();
 
 		for(let i = 0; i < starsToBeAdded; i++){
-			this.starCounterElement(italicElement);
+			this.starCounterElement.appendChild(italicElement);
 		}
 	}
 
