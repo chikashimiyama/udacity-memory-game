@@ -33,9 +33,7 @@ h1 {
     font-weight: 300;
 }
 
-/*
- * Styles for the deck of cards
- */
+/* Styles for the deck of cards */
 
 .deck {
     width: 660px;
@@ -87,9 +85,7 @@ h1 {
     font-size: 33px;
 }
 
-/*
- * Styles for the Score Panel
- */
+/* Styles for the Score Panel */
 
 .score-panel {
     text-align: left;
@@ -124,9 +120,7 @@ h1 {
     width: 25px;
 }
 
-/*
- * Styles for the Result Sheet
- */
+/* Styles for the Result Sheet */
 
 .result{
     display: none;
