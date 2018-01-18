@@ -6,7 +6,7 @@
 class Timer{
 	constructor(){
 		this.id = null;
-		this.reset();
+		this.elapsedTime = 0;
 	}
 
 	start(callback){

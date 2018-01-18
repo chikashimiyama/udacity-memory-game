@@ -6,18 +6,22 @@ class Dealer{
 
 		this.cards = [];
 		this.openedCards = [];
+
 		this.deckFrame = document.querySelector(".deck");
-		this.restartButton = document.querySelector(".restart");
-		this.elapsedTime = 0.0;
+		this.restartButtons = document.querySelectorAll(".restart");
+
+		this.gate = new Gate();
 		this.matchedPairCounter = new Counter();
-		this.timer = new TimerController(document.querySelector(".elapsedTime"));
+		this.timer = new TimerController(document.querySelector(".elapsed-time"));
 		this.moveCounter = new MoveCounter(document.querySelector(".moves"));
 		this.evaluator = new Evaluator(document.querySelector(".stars"));
-		this.clickAcception = true;
+		this.result = new Result(document.querySelector(".result"));
+		this.defineCallbacks();
+		this.init();
 
-		this.timer.start();
+	}
 
-
+	defineCallbacks(){
 		this.deckFrame.addEventListener("click", (event) => {
 			let target = event.target;
 			
@@ -29,22 +33,25 @@ class Dealer{
 			const index = Array.prototype.indexOf.call(this.deckFrame.children, target);
 			
 			// in case the user clicks the deck not the card or animation is ongoing
-			if(index < 0 || !this.clickAcception) return;
+			if(index < 0 || !this.gate.status) return;
 			this.respondToClick(index);
 		});
 
-		this.restartButton.addEventListener("click", (event) => {
-			this.restart();
-		});
+		for(const restartButton of this.restartButtons){
+			restartButton.addEventListener("click", (event) => {
+				this.restart();
+			});
+		}
+
 	}
 
-	prepare(){
+	init(){
 		const cardTypes = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-leaf", "fa-bicycle", "fa-bomb", "fa-cube", "fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-leaf", "fa-bicycle", "fa-bomb", "fa-cube"];
 		for(const cardType of cardTypes){
 			const newCard = new Card(cardType, this.deckFrame);
 			this.cards.push(newCard);
 		}
-		this.shuffle();
+		//this.shuffle();
 		this.deal();
 	}
 
@@ -56,9 +63,24 @@ class Dealer{
 
 		// the player clicked the same card twice
 		if(this.cards[index] === this.openedCards[0]) return;
+		
+		// if this is the first flip, start the timer
+		if(this.allDown()){
+			this.timer.start();
+		}
 
-		this.clickAcception = false;
-		const becomeClickable = () =>{ this.clickAcception = true;};
+		this.executeFlip(index);
+	}
+
+	allDown(){
+		for(const card of this.cards){
+			if(card.open) return false;
+		}
+		return true;
+	}
+
+	executeFlip(index){
+		this.gate.close();
 		this.cards[index].flip(() => {
 			this.openedCards.push(this.cards[index]);
 
@@ -69,21 +91,22 @@ class Dealer{
 
 				if(this.checkMatch()){
 					for(const openCard of this.openedCards){
-						openCard.match(becomeClickable);
+						openCard.match(this.gate.triggerOpen());
 					}
 					this.matchedPairCounter.increment();
 					if(this.checkFinished()){
-						this.showResult();
+						this.timer.stop();
+						this.result.show(this.moveCounter.value, this.timer.elapsedTime, this.evaluator.numStars());
 					}
 				}else{
 					for(const openCard of this.openedCards){
-						openCard.unmatch(becomeClickable);
+						openCard.unmatch(this.gate.triggerOpen());
 					}
 				}
 				this.openedCards = []; // clear array
 
 			}else{
-				becomeClickable();
+				this.gate.open();
 			}
 		});
 	}
@@ -114,6 +137,5 @@ class Dealer{
 
 	restart(){
 		this.shuffle();
-		this.init();
 	}
 }

@@ -12,6 +12,10 @@ class Result{
 	*/
 	constructor(element){
 		this.targetElement = element;
+
+		this.moveElement = document.querySelector(".res-moves");
+		this.timeElement = document.querySelector(".res-time");
+		this.starElement = document.querySelector(".res-stars");
 	}
 
 	/**
@@ -21,14 +25,17 @@ class Result{
 	* @param {number} rating
 	*/
 	show(moves, elapsedTime, rating){
-
+		this.moveElement.innerHTML = moves;
+		this.timeElement.innerHTML = elapsedTime;
+		this.starElement.innerHTML = rating;
+		this.targetElement.classList.add("show");
 	}
 
 	/**
 	* @description close the modal sheet
 	*/
 	close(){
-
+		this.targetElement.classList.remove("show");
 	}
 }
 

@@ -40,10 +40,18 @@ class Evaluator {
 		const italicElement = document.createElement("i");
 		italicElement.classList.add("fa", "fa-star");
 
-		const starsToBeAdded = 3 - this.starCounterElement.children.length;
+		const starsToBeAdded = 3 - this.numStars();
 
 		for(let i = 0; i < starsToBeAdded; i++){
 			this.starCounterElement(italicElement);
 		}
 	}
+
+	/**
+	* @description returns number of stars
+	*/
+	numStars(){
+		return this.starCounterElement.children.length;
+	}
+
 }

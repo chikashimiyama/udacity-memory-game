@@ -114,6 +114,16 @@ h1 {
     cursor: pointer;
 }
 
+.score-panel .elapsed-time{
+    display: inline-block;
+    width: 25px;
+}
+
+.score-panel .moves{
+    display: inline-block;
+    width: 25px;
+}
+
 /*
  * Styles for the Result Sheet
  */
@@ -130,12 +140,16 @@ h1 {
     text-align: center;
 }
 
+.result.show{
+    display: block;
+}
+
 .message{
     position: relative;
     top: 25%;
 }
 
-.retryButton {
+.message .restart {
     margin: auto;
     color: white;
     padding: 10px;
