@@ -1,17 +1,15 @@
 /*jshint esversion: 6 */
 
-/**
-* @description emulates the functionality of a simple timer
-*/
+// emulates the functionality of a simple timer
 class Timer{
-	
+
 	constructor(){
 		this.id = null;
 		this.elapsedTime = 0;
 	}
 
 	start(callback){
-		this.id = setInterval(() => { 
+		this.id = setInterval(() => {
 			this.elapsedTime++;
 			if(callback) callback();
 		}, 1000);
@@ -27,9 +25,7 @@ class Timer{
 	}
 }
 
-/**
-* @description represents a timer with a display
-*/
+// represents a timer with a display
 class TimerController extends Timer{
 
 	constructor(element){

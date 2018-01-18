@@ -15,9 +15,9 @@ class Dealer{
 
 		this.gate = new Gate();
 		this.timer = new TimerController(document.querySelector('.elapsed-time'));
-		this.moveCounter = new MoveCounter(document.querySelector('.moves'));
-		this.evaluator = new Evaluator(document.querySelector('.stars'));
-		this.result = new Result(document.querySelector('.result'));
+		this.moveCounter = new CounterController(document.querySelector('.moves'));
+		this.evaluator = new EvaluatorController(document.querySelector('.stars'), 3, [10, 20]);
+		this.result = new ResultController(document.querySelector('.result'));
 		this.defineCallbacks();
 
 	}
@@ -79,7 +79,7 @@ class Dealer{
 					}
 					if(this.cards.allMatched()){
 						this.timer.stop();
-						this.result.show(this.moveCounter.value, this.timer.elapsedTime, this.evaluator.numStars());
+						this.result.show(this.moveCounter.value, this.timer.elapsedTime, this.evaluator.stars);
 					}
 				}else{
 					for(const openCard of this.openedCards){

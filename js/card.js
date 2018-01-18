@@ -1,5 +1,6 @@
 /*jshint esversion: 6 */
 
+// represents a card
 class Card{
 
 	constructor(type, deck){

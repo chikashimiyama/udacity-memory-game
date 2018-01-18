@@ -1,5 +1,6 @@
 /*jshint esversion: 6 */
 
+// represent a gate
 class Gate{
 
 	constructor(){
@@ -15,7 +16,7 @@ class Gate{
 	}
 
 	triggerOpen(){
-		return ()=>{ 
+		return ()=>{
 			this.open();
 		};
 	}
