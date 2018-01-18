@@ -18,4 +18,4 @@ Download the repo and open index.html file.
 
 ## License 
 
-See License.txt
+See LICENSE
