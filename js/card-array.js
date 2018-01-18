@@ -2,10 +2,12 @@
 
 class CardArray extends Array {
 
-	constructor(deck){
+	constructor(deck, cardTypes){
 		super();
-		const cardTypes = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-leaf', 'fa-bicycle', 'fa-bomb', 'fa-cube', 'fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-leaf', 'fa-bicycle', 'fa-bomb', 'fa-cube'];
-		for(const cardType of cardTypes){
+
+		const allCards = cardTypes.concat(cardTypes);
+
+		for(const cardType of allCards){
 			const newCard = new Card(cardType, deck);
 			this.push(newCard);
 		}

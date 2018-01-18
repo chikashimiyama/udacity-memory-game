@@ -8,7 +8,7 @@ class Dealer{
 		this.restartButton = document.querySelector('.restart');
 		this.retryButton = document.querySelector('.retry');
 
-		this.cards = new CardArray(this.deckDiv);
+		this.cards = new CardArray(this.deckDiv, CARD_TYPES);
 		this.openedCards = [];
 
 		this.firstFlip = false;
