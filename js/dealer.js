@@ -100,7 +100,7 @@ class Dealer{
 		this.moveCounter.reset();
 		this.evaluator.reset();
 		this.deckDiv.innerHTML = '';
-		this.cards = new CardArray(this.deckDiv);
+		this.cards = new CardArray(this.deckDiv, CARD_TYPES);
 	}
 
 }
