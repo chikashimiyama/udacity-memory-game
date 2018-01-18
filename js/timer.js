@@ -4,6 +4,7 @@
 * @description emulates the functionality of a simple timer
 */
 class Timer{
+	
 	constructor(){
 		this.id = null;
 		this.elapsedTime = 0;

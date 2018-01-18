@@ -4,7 +4,7 @@ class CardArray extends Array {
 
 	constructor(deck){
 		super();
-		const cardTypes = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-leaf", "fa-bicycle", "fa-bomb", "fa-cube", "fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-leaf", "fa-bicycle", "fa-bomb", "fa-cube"];
+		const cardTypes = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-leaf', 'fa-bicycle', 'fa-bomb', 'fa-cube', 'fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-leaf', 'fa-bicycle', 'fa-bomb', 'fa-cube'];
 		for(const cardType of cardTypes){
 			const newCard = new Card(cardType, deck);
 			this.push(newCard);
@@ -16,7 +16,7 @@ class CardArray extends Array {
 	}
 
 	clean(deck){
-		deck.innerHTML = "";
+		deck.innerHTML = '';
 	}
 
 	shuffle() {

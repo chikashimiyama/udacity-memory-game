@@ -13,9 +13,9 @@ class Result{
 	constructor(element){
 		this.targetElement = element;
 
-		this.moveElement = document.querySelector(".res-moves");
-		this.timeElement = document.querySelector(".res-time");
-		this.starElement = document.querySelector(".res-stars");
+		this.moveElement = document.querySelector('.res-moves');
+		this.timeElement = document.querySelector('.res-time');
+		this.starElement = document.querySelector('.res-stars');
 	}
 
 	/**
@@ -28,14 +28,14 @@ class Result{
 		this.moveElement.innerHTML = moves;
 		this.timeElement.innerHTML = elapsedTime;
 		this.starElement.innerHTML = rating;
-		this.targetElement.classList.add("show");
+		this.targetElement.classList.add('show');
 	}
 
 	/**
 	* @description close the modal sheet
 	*/
 	close(){
-		this.targetElement.classList.remove("show");
+		this.targetElement.classList.remove('show');
 	}
 }
 

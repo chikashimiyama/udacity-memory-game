@@ -37,8 +37,8 @@ class Evaluator {
 	* @description access the DOM and reset the rating
 	*/
 	reset(){
-		const italicElement = document.createElement("i");
-		italicElement.classList.add("fa", "fa-star");
+		const italicElement = document.createElement('i');
+		italicElement.classList.add('fa', 'fa-star');
 
 		const starsToBeAdded = 3 - this.numStars();
 

@@ -15,11 +15,11 @@ class Card{
 	}
 
 	show(){
-		const listElement = document.createElement("li");
-		listElement.classList.add("card");
+		const listElement = document.createElement('li');
+		listElement.classList.add('card');
 
-		const italicElement = document.createElement("i");
-		italicElement.classList.add("fa", this.type);
+		const italicElement = document.createElement('i');
+		italicElement.classList.add('fa', this.type);
 		listElement.appendChild(italicElement);
 		this.deck.appendChild(listElement);
 		this.view = listElement;
@@ -30,11 +30,11 @@ class Card{
 		let value = 0;
 		const id = setInterval(() => {
 			const degree = value + offset;
-			this.view.style.transform = "rotateY("+degree+"deg)";
+			this.view.style.transform = 'rotateY('+degree+'deg)';
 			value += 10;
 			if(value === 90){
 				this.open = !this.open;
-				this.view.setAttribute("class", this.open ? "card show open" : "card");
+				this.view.setAttribute('class', this.open ? 'card show open' : 'card');
 			}
 			if(value === 180){
 				clearInterval(id);
@@ -45,14 +45,14 @@ class Card{
 
 	match(postProcess){
 		this.matched = true;
-		this.view.setAttribute("class", "card match");
-		this.view.style.transform = "scale(1.5)";
+		this.view.setAttribute('class', 'card match');
+		this.view.style.transform = 'scale(1.5)';
 		let scale = 1.4;
 		const id = setInterval( () =>{
-			this.view.style.transform = "scale("+scale+")";
+			this.view.style.transform = 'scale('+scale+')';
 			scale -= 0.08;
 			if(scale <= 1.0){
-				this.view.style.transform = "scale(1.0)";
+				this.view.style.transform = 'scale(1.0)';
 				clearInterval(id);
 				postProcess();
 			}
@@ -61,14 +61,14 @@ class Card{
 
 	unmatch(postProcess){
 		let phase = 0.0;
-		this.view.setAttribute("class", "card unmatch");
+		this.view.setAttribute('class', 'card unmatch');
 		const id = setInterval( () =>{
 			const amp = Math.sin(phase) * 20;
-			this.view.style.transform = "translateX("+amp+"px)";
+			this.view.style.transform = 'translateX('+amp+'px)';
 			phase += 0.8;
 			if(phase >= 12){
 				clearInterval(id);
-				this.view.style.transform = "translateX(0px)";
+				this.view.style.transform = 'translateX(0px)';
 				this.flip(postProcess);
 			}
 		}, 35);

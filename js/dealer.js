@@ -4,9 +4,9 @@ class Dealer{
 
 	constructor(){
 
-		this.deckDiv = document.querySelector(".deck");
-		this.restartButton = document.querySelector(".restart");
-		this.retryButton = document.querySelector(".retry");
+		this.deckDiv = document.querySelector('.deck');
+		this.restartButton = document.querySelector('.restart');
+		this.retryButton = document.querySelector('.retry');
 
 		this.cards = new CardArray(this.deckDiv);
 		this.openedCards = [];
@@ -14,20 +14,20 @@ class Dealer{
 		this.firstFlip = false;
 
 		this.gate = new Gate();
-		this.timer = new TimerController(document.querySelector(".elapsed-time"));
-		this.moveCounter = new MoveCounter(document.querySelector(".moves"));
-		this.evaluator = new Evaluator(document.querySelector(".stars"));
-		this.result = new Result(document.querySelector(".result"));
+		this.timer = new TimerController(document.querySelector('.elapsed-time'));
+		this.moveCounter = new MoveCounter(document.querySelector('.moves'));
+		this.evaluator = new Evaluator(document.querySelector('.stars'));
+		this.result = new Result(document.querySelector('.result'));
 		this.defineCallbacks();
 
 	}
 
 	defineCallbacks(){
-		this.deckDiv.addEventListener("click", (event) => {
+		this.deckDiv.addEventListener('click', (event) => {
 			let target = event.target;
 			
 			// in case the icon in the card is clicked, change the target to its parent, the card itself.
-			if(target.tagName === "I"){
+			if(target.tagName === 'I'){
 				target = target.parentNode;
 			}
 
@@ -38,11 +38,11 @@ class Dealer{
 			this.respondToClick(index);
 		});
 
-		this.restartButton.addEventListener("click", (event) => {
+		this.restartButton.addEventListener('click', (event) => {
 			this.restart();
 		});
 
-		this.retryButton.addEventListener("click", (event) => {
+		this.retryButton.addEventListener('click', (event) => {
 			this.result.close();
 			this.restart();
 		});
@@ -99,7 +99,7 @@ class Dealer{
 		this.timer.reset();
 		this.moveCounter.reset();
 		this.evaluator.reset();
-		this.deckDiv.innerHTML = "";
+		this.deckDiv.innerHTML = '';
 		this.cards = new CardArray(this.deckDiv);
 	}
 
